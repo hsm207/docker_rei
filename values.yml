@@ -10,3 +10,9 @@ rasa:
     rasaWorker:
       enabled: true
   tag: 2.8.23
+
+nginx:
+  enabled: false
+
+ingress:
+  enabled: true
