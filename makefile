@@ -14,7 +14,11 @@ install-rei:
 
 adjust-kubectl:
 	docker network connect kind rasa-x && \
-	MASTER_IP=$$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' rasa-control-plane)
+	MASTER_IP=$$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' rasa-control-plane) && \
+	sed -i "s/^    server:.*/    server: https:\/\/$$MASTER_IP:6443/" $$HOME/.kube/config
+
+add-ingress:
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 
 
 install-did: install-rei
@@ -24,7 +28,7 @@ install-did: install-rei
 			--values-file values.yml && \
 		kubectl apply -f custom-ingress.yml
 
-install-dfd: install-rei adjust-kubectl
+install-dfd: install-rei adjust-kubectl add-ingress
 	rasactl start rasa-x \
 			--rasa-x-password safe_credential  \
 			--rasa-x-chart-version 4.4.0 \
@@ -43,6 +47,7 @@ run:
 		-v $$(pwd)/bot:/app/bot \
 		--name rasa-x \
 		--rm \
+		--privileged \
 		hsm207/docker-rei:20220310	
 
 clean:
