@@ -1,0 +1,12 @@
+debugMode: "true"
+
+rasax:
+  tag: 1.0.1
+
+rasa:
+  versions:
+    rasaProduction:
+      enabled: true
+    rasaWorker:
+      enabled: true
+  tag: 2.8.23
