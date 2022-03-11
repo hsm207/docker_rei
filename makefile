@@ -22,11 +22,12 @@ add-ingress:
 
 
 install-did: install-rei
-	rasactl start rasa-x \
+	-rasactl start rasa-x \
+			--project-path $$(pwd)/bot \
 			--rasa-x-password safe_credential  \
 			--rasa-x-chart-version 4.4.0 \
-			--values-file values.yml && \
-		kubectl apply -f custom-ingress.yml
+			--values-file values.yml
+	-kubectl apply -f custom-ingress.yml
 
 install-dfd: install-rei adjust-kubectl add-ingress
 	rasactl start rasa-x \
