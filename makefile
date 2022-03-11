@@ -36,6 +36,8 @@ install-dfd: install-rei adjust-kubectl add-ingress
 			--values-file values.yml && \
 		kubectl apply -f custom-ingress.yml
 
+monitor:
+	watch kubectl get pods --all-namespaces
 
 build:
 	d=`date +%Y%m%d` && \
