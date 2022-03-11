@@ -1,14 +1,3 @@
-install:
-	bash rei.sh && \
-	# docker network connect kind rasa-x && \
-	# MASTER_IP=$$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' rasa-control-plane) && \
-	# sed -i "s/^    server:.*/    server: https:\/\/$$MASTER_IP:6443/" $$HOME/.kube/config && \
-	rasactl start rasa-x \
-		--rasa-x-password safe_credential  \
-    	--rasa-x-chart-version 4.4.0 \
-    	--values-file values.yml && \
-	kubectl apply -f custom-ingress.yml
-
 install-rei:
 	bash rei.sh
 
